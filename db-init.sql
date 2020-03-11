@@ -1,4 +1,7 @@
 CREATE USER IF NOT EXISTS 'dbadmin'@'localhost' identified by 'password';
+GRANT ALL PRIVILEGES ON * . * TO 'dbadmin'@'localhost';
+
+SET SQL_MODE = 'ALLOW_INVALID_DATES';
 
 CREATE DATABASE IF NOT EXISTS library_sys;
 USE library_sys;
