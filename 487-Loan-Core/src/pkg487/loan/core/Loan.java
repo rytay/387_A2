@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Loan.findByBookId", query = "SELECT l FROM Loan l WHERE l.bookId = :bookId")
     , @NamedQuery(name = "Loan.findByUserId", query = "SELECT l FROM Loan l WHERE l.userId = :userId")
     , @NamedQuery(name = "Loan.findByDateBorrowed", query = "SELECT l FROM Loan l WHERE l.dateBorrowed = :dateBorrowed")
-    , @NamedQuery(name = "Loan.findByDateReturned", query = "SELECT l FROM Loan l WHERE l.dateReturned = :dateReturned")})
+    , @NamedQuery(name = "Loan.findByDateReturned", query = "SELECT l FROM Loan l WHERE l.dateReturned = :dateReturned")
+    , @NamedQuery(name = "Loan.verifyAvailable", query = "SELECT l FROM Loan l WHERE l.bookId = :bookId AND l.dateReturned IS NULL")})
 public class Loan implements Serializable {
 
     private static final long serialVersionUID = 1L;
