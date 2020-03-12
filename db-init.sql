@@ -1,9 +1,10 @@
-CREATE USER IF NOT EXISTS 'dbadmin'@'localhost' identified by 'password';
-GRANT ALL PRIVILEGES ON * . * TO 'dbadmin'@'localhost';
-
 SET SQL_MODE = 'ALLOW_INVALID_DATES';
 
 CREATE DATABASE IF NOT EXISTS library_sys;
+CREATE USER IF NOT EXISTS 'dbadmin'@'localhost' identified by 'password';
+update user set authentication_string=password('YOURPASSWORDHERE') where user='root';
+GRANT ALL PRIVILEGES ON * . * TO 'dbadmin'@'localhost';
+FLUSH PRIVILEGES;
 USE library_sys;
 
 DROP TABLE IF EXISTS
@@ -18,6 +19,7 @@ CREATE TABLE IF NOT EXISTS book(
     isbn INT,
     author VARCHAR(255),
     publisher VARCHAR(255)
+
 );
 
 INSERT INTO book (title, book_desc, isbn, author, publisher)
@@ -28,14 +30,14 @@ VALUES
 	("Test Book3", "Test Description3", 3333333, "Test Author3", "Test Publisher 3"),
 	("Test Book4", "Test Description4", 4444444, "Test Author4", "Test Publisher 4");
     
-CREATE TABLE IF NOT EXISTS users(
+CREATE TABLE IF NOT EXISTS user(
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     login VARCHAR(255),
     pass VARCHAR(255),
     auth_level INT
 );
 
-INSERT INTO users (login, pass, auth_level)
+INSERT INTO user (login, pass, auth_level)
 VALUES
 	("admin", "admin", 0);
 
@@ -44,9 +46,7 @@ CREATE TABLE IF NOT EXISTS loan(
     book_id INT,
     user_id INT,
     date_borrowed TIMESTAMP,
-    date_returned TIMESTAMP,
-    FOREIGN KEY (book_id) REFERENCES book(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    date_returned TIMESTAMP
 );
 
 INSERT INTO loan (book_id, user_id, date_borrowed, date_returned)
