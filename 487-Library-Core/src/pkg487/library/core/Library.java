@@ -74,6 +74,8 @@ public class Library {
                 et = em.getTransaction();
                 et.begin();
 		b = em.find(Book.class, id);
+		if (b == null)
+		    throw new Exception("No book with id :" + id);
 		em.remove(b);
                 et.commit();
         }catch (Exception e) {
@@ -98,6 +100,8 @@ public class Library {
                 et = em.getTransaction();
                 et.begin();
 		b = em.find(Book.class,editedBook.getId());
+		if(b == null)
+		    throw new Exception("No book with id : " + editedBook.getId());
                 b.setTitle(editedBook.getTitle());
                 b.setIsbn(editedBook.getIsbn());
                 b.setAuthor(editedBook.getAuthor());

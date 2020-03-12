@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package pkg487.library.core;
+import java.util.List;
 
 /**
  *
@@ -16,6 +17,12 @@ public class libraryMain {
      */
     public static void main(String[] args) {
 	// TODO code application logic here
+	
+	Library lib = new Library();
+	List<Book> books = lib.read(null);
+	for (Book b : books){
+	    System.out.println(b);
+	}
     }
     
 }
