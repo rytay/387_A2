@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pkg487.library.system;
+package pkg487.library.core;
 import java.util.List;
 import pkg487.library.core.Book;
 import javax.persistence.*;

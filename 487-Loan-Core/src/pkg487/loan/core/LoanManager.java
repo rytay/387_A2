@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pkg487.loan.system;
+package pkg487.loan.core;
 
 import java.util.Date;
 import java.util.List;
-import pkg487.loan.core.Loan;
 import javax.persistence.*;
 
 /**
@@ -49,7 +48,7 @@ public class LoanManager {
 	EntityTransaction et = null;
 	Loan l = null;
 	try {
-	    Query query = em.createNamedQuery("Loan.verifyAvailable");
+	    Query query = em.createNamedQuery("Loan.verifyAvailable").setParameter("bookId", bookId);
 	    if(!query.getResultList().isEmpty())
 		throw new Exception("Book is active in another loan. Cannot create new loan for this book.");
 	    et = em.getTransaction();
@@ -82,6 +81,8 @@ public class LoanManager {
                 et = em.getTransaction();
                 et.begin();
 		l = em.find(Loan.class, id);
+		if(l == null)
+		    throw new Exception("No loan with id : " + id);
 		em.remove(l);
                 et.commit();
         }catch (Exception e) {
@@ -105,6 +106,8 @@ public class LoanManager {
                 et = em.getTransaction();
                 et.begin();
 		l = em.find(Loan.class,editedLoan.getId());
+		if(l == null) 
+		    throw new Exception("No loan with id: " + editedLoan.getId());
 		l.setDateBorrowed(editedLoan.getDateBorrowed());
 		l.setDateReturned(editedLoan.getDateReturned());
                 em.persist(l);
@@ -130,6 +133,8 @@ public class LoanManager {
 		et = em.getTransaction();
                 et.begin();
 		l = em.find(Loan.class,loanId);
+		if(l == null) 
+		    throw new Exception("No loan with id: " + loanId);
 		if(l.getDateReturned() != null)
 		    throw new Exception("Book already returned.");
 		l.setDateReturned(new Date());

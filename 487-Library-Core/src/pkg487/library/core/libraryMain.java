@@ -9,7 +9,7 @@ package pkg487.library.core;
  *
  * @author ryan
  */
-public class LibraryCore {
+public class libraryMain {
 
     /**
      * @param args the command line arguments
