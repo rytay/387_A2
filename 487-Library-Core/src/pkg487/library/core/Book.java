@@ -128,7 +128,7 @@ public class Book implements Serializable {
 
     @Override
     public String toString() {
-	return "pkg487.library.core.Book[ id=" + id + " ]";
+	return "ID: "+ id +" Title: "+title+" Description: "+bookDesc+ " ISBN: "+ isbn+" Author: "+author+" Publisher "+publisher;
     }
     
 }

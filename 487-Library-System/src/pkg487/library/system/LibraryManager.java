@@ -33,13 +33,16 @@ public class LibraryManager {
 	    result = query.getResultList();
 	}
 	
-	if(!result.isEmpty())
-	    return result;
-	else
-	    return null;
-	    
-	
+	if(!result.isEmpty()){
+            em.close();
+            return result;
+        }
+        else{
+            em.close();
+            return null;
+        }    
     }
+    
     public Book create(Book newBook){
 
         EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
