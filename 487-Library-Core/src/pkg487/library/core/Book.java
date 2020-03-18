@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  *
@@ -45,7 +46,7 @@ public class Book implements Serializable {
     @Column(name = "book_desc")
     private String bookDesc;
     @Column(name = "isbn")
-    private Integer isbn;
+    private String isbn;
     @Column(name = "author")
     private String author;
     @Column(name = "publisher")
@@ -53,11 +54,8 @@ public class Book implements Serializable {
 
     public Book() {
     }
-
-    public Book(Integer id) {
-	this.id = id;
-    }
-
+    
+    @XmlElement(name = "id")
     public Integer getId() {
 	return id;
     }
@@ -65,7 +63,8 @@ public class Book implements Serializable {
     public void setId(Integer id) {
 	this.id = id;
     }
-
+    
+    @XmlElement(name = "title")
     public String getTitle() {
 	return title;
     }
@@ -73,7 +72,8 @@ public class Book implements Serializable {
     public void setTitle(String title) {
 	this.title = title;
     }
-
+    
+    @XmlElement(name = "description")
     public String getBookDesc() {
 	return bookDesc;
     }
@@ -81,15 +81,17 @@ public class Book implements Serializable {
     public void setBookDesc(String bookDesc) {
 	this.bookDesc = bookDesc;
     }
-
-    public Integer getIsbn() {
+    
+    @XmlElement(name = "isbn")
+    public String getIsbn() {
 	return isbn;
     }
 
-    public void setIsbn(Integer isbn) {
+    public void setIsbn(String isbn) {
 	this.isbn = isbn;
     }
-
+    
+    @XmlElement(name = "author")
     public String getAuthor() {
 	return author;
     }
@@ -97,11 +99,12 @@ public class Book implements Serializable {
     public void setAuthor(String author) {
 	this.author = author;
     }
-
+    
+    @XmlElement(name = "publisher")
     public String getPublisher() {
 	return publisher;
     }
-
+    
     public void setPublisher(String publisher) {
 	this.publisher = publisher;
     }

@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS book(
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255),
     book_desc VARCHAR(255),
-    isbn INT,
+    isbn VARCHAR(255),
     author VARCHAR(255),
     publisher VARCHAR(255)
 
@@ -24,11 +24,11 @@ CREATE TABLE IF NOT EXISTS book(
 
 INSERT INTO book (title, book_desc, isbn, author, publisher)
 VALUES 
-	("Test Book", "Test Description", 0000000, "Test Author", "Test Publisher"),
-	("Test Book1", "Test Description1", 1111111, "Test Author1", "Test Publisher 1"),
-	("Test Book2", "Test Description2", 2222222, "Test Author2", "Test Publisher 2"),
-	("Test Book3", "Test Description3", 3333333, "Test Author3", "Test Publisher 3"),
-	("Test Book4", "Test Description4", 4444444, "Test Author4", "Test Publisher 4");
+	("Test Book", "Test Description", "0000000", "Test Author", "Test Publisher"),
+	("Test Book1", "Test Description1", "1111111", "Test Author1", "Test Publisher 1"),
+	("Test Book2", "Test Description2", "2222222", "Test Author2", "Test Publisher 2"),
+	("Test Book3", "Test Description3", "3333333", "Test Author3", "Test Publisher 3"),
+	("Test Book4", "Test Description4", "4444444", "Test Author4", "Test Publisher 4");
     
 CREATE TABLE IF NOT EXISTS user(
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

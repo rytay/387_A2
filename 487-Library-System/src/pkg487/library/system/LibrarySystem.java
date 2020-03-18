@@ -26,7 +26,6 @@ public class LibrarySystem {
 	    System.out.println(b);
 	}
 	System.out.println("Deleting with ID 1");
-	Book deleted = lm.delete(1);
 	
 	books = lm.read(null);
 	for(Book b : books){
