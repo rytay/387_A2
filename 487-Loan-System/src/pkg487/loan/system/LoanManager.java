@@ -152,7 +152,30 @@ public class LoanManager {
 	
     }
     
-   
+  
+  public Loan[] loansByBookId(int bookId){
+      
+      if(bookId == -1){
+          return new Loan[0];
+      }
+      
+      EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+      List<Loan> result = null;
+      
+      try{
+          Query query = em.createNamedQuery("Loan.findByBookId");
+          query.setParameter("bookId", bookId);
+          result = query.getResultList();      
+      }catch(Exception e){
+          e.printStackTrace();
+      }
+      
+      Loan[] loans = new Loan[result.size()];
+      result.toArray(loans);
+      
+      return loans;
+  }
+  
 }
 
 
