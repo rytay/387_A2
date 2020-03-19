@@ -35,21 +35,21 @@ public class LoanManager {
 	    result = query.getResultList();
 	}
 	
-	if(!result.isEmpty())
-	    return result;
-	else
-	    return null;
+	return result;
     }
     //Need to check if book exists from client request to Library before doing this method, also user not implemented yet
-    public Loan create(Loan newLoan) {
+    public void create(Loan newLoan) throws LoanUnvailableException {
 	Integer bookId = newLoan.getBookId();
 	EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-	EntityTransaction et = null;
 	Loan l = null;
+	Query query = em.createNamedQuery("Loan.verifyAvailable").setParameter("bookId", bookId);
+	if(!query.getResultList().isEmpty()){
+	    em.close();
+	    throw new LoanUnvailableException("Book is active in another loan. Cannot create new loan for this book.");
+	}
+	EntityTransaction et = null;
 	try {
-	    Query query = em.createNamedQuery("Loan.verifyAvailable").setParameter("bookId", bookId);
-	    if(!query.getResultList().isEmpty())
-		throw new Exception("Book is active in another loan. Cannot create new loan for this book.");
+	   
 	    et = em.getTransaction();
 	    et.begin();
 	    l = new Loan();
@@ -66,22 +66,25 @@ public class LoanManager {
 
 	} finally {
 	    em.close();
-	    return l;
 	}
 
     }
     
-    public Loan delete(Integer id){
+    public void delete(Integer id) throws LoanUnvailableException{
 
         EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction et = null;
-	Loan l = null;
+	Loan l = null;		
+	l = em.find(Loan.class, id);
+	if(l == null){
+	    em.close();
+	    throw new LoanUnvailableException("No loan with id : " + id);
+	}
+
         try {
                 et = em.getTransaction();
                 et.begin();
-		l = em.find(Loan.class, id);
-		if(l == null)
-		    throw new Exception("No loan with id : " + id);
+
 		em.remove(l);
                 et.commit();
         }catch (Exception e) {
@@ -92,21 +95,22 @@ public class LoanManager {
 
         } finally {
             em.close();
-	    return l;
         }
 	
     }
     
-  public Loan update(Loan editedLoan){
+  public void update(Loan editedLoan) throws LoanUnvailableException{
         EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction et = null;
 	Loan l = null;
+	l = em.find(Loan.class, editedLoan.getId());
+	if(l == null){
+	    em.close();
+	    throw new LoanUnvailableException("No loan with id : " + editedLoan.getId());
+	}
         try {
                 et = em.getTransaction();
                 et.begin();
-		l = em.find(Loan.class,editedLoan.getId());
-		if(l == null) 
-		    throw new Exception("No loan with id: " + editedLoan.getId());
 		l.setDateBorrowed(editedLoan.getDateBorrowed());
 		l.setDateReturned(editedLoan.getDateReturned());
                 em.persist(l);
@@ -119,23 +123,28 @@ public class LoanManager {
 
         } finally {
             em.close();
-	    return l;
         }
 	
     }
   
-  public Loan returnBook(Integer loanId){
+  public void returnBook(Integer loanId) throws LoanUnvailableException{
         EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction et = null;
 	Loan l = null;
+	l = em.find(Loan.class,loanId);
+	if(l == null){
+	    em.close();
+	    throw new LoanUnvailableException("No loan with id: " + loanId);
+	}
+	    
+	else if(l.getDateReturned() != null){
+	    em.close();
+	    throw new LoanUnvailableException("Book already returned.");
+	}
+	    
         try {
 		et = em.getTransaction();
                 et.begin();
-		l = em.find(Loan.class,loanId);
-		if(l == null) 
-		    throw new Exception("No loan with id: " + loanId);
-		if(l.getDateReturned() != null)
-		    throw new Exception("Book already returned.");
 		l.setDateReturned(new Date());
                 em.persist(l);
                 et.commit();
@@ -147,11 +156,45 @@ public class LoanManager {
 
         } finally {
             em.close();
-	    return l;
         }
 	
     }
-    
+  
+  public Loan getActiveLoan(Integer bookId, Integer userId) throws LoanUnvailableException{
+      EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+      Query query = em.createNamedQuery("Loan.findActiveForUser").setParameter("bookId", bookId).setParameter("userId", userId);
+      List<Loan> results = query.getResultList();
+      if(results.isEmpty()){
+	em.close();
+	throw new LoanUnvailableException("No active loan with userId :" +userId+ " and bookId : "+bookId);
+      }else
+	  return results.get(0);
+  }
+  
+ 
+  //may want to return an empty list instead of an exception, but can be done on client
+  public Loan[] getAllActiveLoans(Integer userId) throws LoanUnvailableException{
+      EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+      Query query = null;
+      if(userId == null)
+	query = em.createNamedQuery("Loan.findAllActive").setParameter("userId", userId);
+      else
+	query = em.createNamedQuery("Loan.findAllActiveForUser").setParameter("userId", userId);
+      List<Loan> resultList = query.getResultList();
+      if(resultList.isEmpty()){
+	em.close();
+	if(userId == null)
+	    throw new LoanUnvailableException("No active loans in the system");
+	else
+	    throw new LoanUnvailableException("No active loans for userId :" +userId);
+    }else{
+	Loan[] active = new Loan[resultList.size()];
+	resultList.toArray(active);
+	return active;
+      }
+
+  }
+  
   
   public Loan[] loansByBookId(int bookId){
       
@@ -168,12 +211,14 @@ public class LoanManager {
           result = query.getResultList();      
       }catch(Exception e){
           e.printStackTrace();
+      }finally{
+	  em.close();
+
       }
-      
       Loan[] loans = new Loan[result.size()];
       result.toArray(loans);
-      
       return loans;
+
   }
   
 }

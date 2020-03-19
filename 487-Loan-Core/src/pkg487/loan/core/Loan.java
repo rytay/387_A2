@@ -34,7 +34,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Loan.findByUserId", query = "SELECT l FROM Loan l WHERE l.userId = :userId")
     , @NamedQuery(name = "Loan.findByDateBorrowed", query = "SELECT l FROM Loan l WHERE l.dateBorrowed = :dateBorrowed")
     , @NamedQuery(name = "Loan.findByDateReturned", query = "SELECT l FROM Loan l WHERE l.dateReturned = :dateReturned")
-    , @NamedQuery(name = "Loan.verifyAvailable", query = "SELECT l FROM Loan l WHERE l.bookId = :bookId AND l.dateReturned IS NULL")})
+    , @NamedQuery(name = "Loan.verifyAvailable", query = "SELECT l FROM Loan l WHERE l.bookId = :bookId AND l.dateReturned IS NULL")
+    , @NamedQuery(name = "Loan.findActiveForUser", query = "SELECT l FROM Loan l WHERE l.bookId = :bookId AND l.userId = :userId AND l.dateReturned IS NULL")
+    , @NamedQuery(name = "Loan.findAllActiveForUser", query = "SELECT l FROM Loan l WHERE l.userId = :userId AND l.dateReturned IS NULL")
+    , @NamedQuery(name = "Loan.findAllActive", query = "SELECT l FROM Loan l WHERE l.dateReturned IS NULL")})
 public class Loan implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -100,6 +103,10 @@ public class Loan implements Serializable {
     public void setDateReturned(Date dateReturned) {
 	this.dateReturned = dateReturned;
     }
+    
+   public boolean isReturned(){
+       return dateReturned == null;
+   }
 
     @Override
     public int hashCode() {
@@ -123,7 +130,7 @@ public class Loan implements Serializable {
 
     @Override
     public String toString() {
-	return "pkg487.loan.core.Loan[ id=" + id + " ]";
+	return "Loan id : " + id + " book_id :"+bookId+" user_id : "+userId+" date_borrowed : "+dateBorrowed+" date_returned: "+dateReturned;
     }
     
 }

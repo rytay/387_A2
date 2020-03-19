@@ -55,7 +55,7 @@ public class LoanService {
         }catch(Exception e){
             e.printStackTrace();
         }
-        
+
         return manager.loansByBookId(bookIdInt);
     }
 }
