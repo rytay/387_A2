@@ -9,7 +9,7 @@ USE library_sys;
 
 DROP TABLE IF EXISTS
 	book,
-    user,
+    users,
     loan;
 
 CREATE TABLE IF NOT EXISTS book(
@@ -30,7 +30,7 @@ VALUES
 	("Test Book3", "Test Description3", "3333333", "Test Author3", "Test Publisher 3"),
 	("Test Book4", "Test Description4", "4444444", "Test Author4", "Test Publisher 4");
     
-CREATE TABLE IF NOT EXISTS user(
+CREATE TABLE IF NOT EXISTS users(
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     login VARCHAR(255) UNIQUE,
     pass VARCHAR(255),
