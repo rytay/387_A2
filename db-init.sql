@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS users(
 );
 
 
-INSERT INTO user (login, pass, auth_level)
+INSERT INTO users (login, pass, auth_level)
 VALUES
 	("admin", "admin", 0),
     ("ryan","1234","1");
