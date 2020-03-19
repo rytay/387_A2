@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import pkg487.loan.core.Loan;
 import javax.persistence.*;
+import pkg487.loan.core.User;
 
 
 /**
@@ -16,8 +17,6 @@ import javax.persistence.*;
  * @author ryan
  */
 
-
-//TODO: LoanException class instead of generic exception
 public class LoanManager {
    
     private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("487-Loan-CorePU");
@@ -34,6 +33,7 @@ public class LoanManager {
 	    query.setParameter("id", id);
 	    result = query.getResultList();
 	}
+	em.close();
 	
 	return result;
     }

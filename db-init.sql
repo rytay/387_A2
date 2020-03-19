@@ -9,7 +9,7 @@ USE library_sys;
 
 DROP TABLE IF EXISTS
 	book,
-    users,
+    user,
     loan;
 
 CREATE TABLE IF NOT EXISTS book(
@@ -32,14 +32,16 @@ VALUES
     
 CREATE TABLE IF NOT EXISTS user(
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    login VARCHAR(255),
+    login VARCHAR(255) UNIQUE,
     pass VARCHAR(255),
     auth_level INT
 );
 
+
 INSERT INTO user (login, pass, auth_level)
 VALUES
-	("admin", "admin", 0);
+	("admin", "admin", 0),
+    ("ryan","1234","1");
 
 CREATE TABLE IF NOT EXISTS loan(
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
