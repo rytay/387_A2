@@ -177,23 +177,16 @@ public class LoanManager {
       EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
       Query query = null;
       if(userId == null)
-	query = em.createNamedQuery("Loan.findAllActive").setParameter("userId", userId);
+	query = em.createNamedQuery("Loan.findAllActive");
       else
 	query = em.createNamedQuery("Loan.findAllActiveForUser").setParameter("userId", userId);
+      
       List<Loan> resultList = query.getResultList();
-      if(resultList.isEmpty()){
-	em.close();
-	if(userId == null)
-	    throw new LoanUnvailableException("No active loans in the system");
-	else
-	    throw new LoanUnvailableException("No active loans for userId :" +userId);
-    }else{
-	Loan[] active = new Loan[resultList.size()];
-	resultList.toArray(active);
-	return active;
-      }
-
-  }
+      em.close();
+      Loan[] active = new Loan[resultList.size()];
+      resultList.toArray(active);
+      return active;
+    }
   
   
   public Loan[] loansByBookId(int bookId){
