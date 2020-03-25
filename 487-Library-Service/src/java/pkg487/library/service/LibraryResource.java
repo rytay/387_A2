@@ -100,7 +100,8 @@ public class LibraryResource {
 
 	switch(type){
 	    case "json":
-		    return Response.ok(queryResult, MediaType.APPLICATION_JSON).build();
+		    GenericEntity<List<Book>> jsonList = new GenericEntity<List<Book>>(queryResult) {};
+		    return Response.ok(jsonList, MediaType.APPLICATION_JSON).build();
 	    case "xml":
 		    //Need to convert to genericEntity to process xml as list
 		    GenericEntity<List<Book>> list = new GenericEntity<List<Book>>(queryResult) {};
@@ -123,6 +124,8 @@ public class LibraryResource {
      * 
      * @return list of book with id specified or empty list
      */
+    
+
     @GET
     @Path("/{type}/list/{id}")
     public Response findBook(@PathParam("id") Integer id, @PathParam("type") String type){
@@ -154,6 +157,7 @@ public class LibraryResource {
      * @return 
      */
     @POST
+    @Produces(MediaType.TEXT_PLAIN)
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("/create")
     public Response createBook(Book newBook){
@@ -218,7 +222,7 @@ public class LibraryResource {
      * @param b
      * @return 
      */
-    @POST
+    @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/edit")
     public Response editBook(Book editedBook){
@@ -233,7 +237,7 @@ public class LibraryResource {
 	return Response.ok(200).entity("Successfully edited book : \n"+editedBook).build();
     }
     
-    @POST
+    @PUT
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/edit")
     public Response formEditBook(@FormParam("id") Integer id,
