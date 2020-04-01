@@ -8,7 +8,6 @@ package pkg487.webclient;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
-import javax.ws.rs.core.MediaType;
 import pkg487.library.core.Book;
 
 /**

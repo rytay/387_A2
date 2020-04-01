@@ -6,7 +6,6 @@
 package pkg487.library.system;
 
 import java.util.List;
-import pkg487.library.system.LibraryManager;
 import pkg487.library.core.Book;
 
 /**
