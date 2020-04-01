@@ -103,7 +103,6 @@ public class LibraryResource {
 		    GenericEntity<List<Book>> jsonList = new GenericEntity<List<Book>>(queryResult) {};
 		    return Response.ok(jsonList, MediaType.APPLICATION_JSON).build();
 	    case "xml":
-		    //Need to convert to genericEntity to process xml as list
 		    GenericEntity<List<Book>> list = new GenericEntity<List<Book>>(queryResult) {};
 		    return Response.ok(list, MediaType.APPLICATION_XML).build();
 

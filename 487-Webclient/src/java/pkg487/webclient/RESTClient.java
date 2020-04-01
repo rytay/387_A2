@@ -48,10 +48,10 @@ public class RESTClient {
     }
    
     //Returns list of books with autoconversion
-    public List<Book> listBooks(String mediaType){
+    public List<Book> listBooks(String mediaPath){
 	List<Book> results = client
 		.target(BASE_URI)
-		.path(mediaType).path("list")
+		.path(mediaPath).path("list")
 		.request()
 		.get(new GenericType<List<Book>>(){});
         return results;
@@ -152,7 +152,7 @@ public class RESTClient {
 	form.param("isbn",isbn);
 	form.param("publisher", publisher);
 	Response response = client.target(BASE_URI)
-		.path("/edit").request()
+		.path("edit").request()
 		.put(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
 	return response.readEntity(String.class);
 

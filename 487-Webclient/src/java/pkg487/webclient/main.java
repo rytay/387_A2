@@ -30,7 +30,7 @@ public class main {
 	//Converting book to json
 	ObjectMapper mapper = new ObjectMapper();
 	String bookJson = mapper.writeValueAsString(newBook);
-	
+	System.out.println(bookJson);
 	//restClient.createBookFromRaw(bookJson, MediaType.APPLICATION_JSON);
 	List<Book> books = restClient.listBooks("json");
 	for (Book b : books){
