@@ -9,8 +9,6 @@ import java.util.Date;
 import java.util.List;
 import pkg487.loan.core.Loan;
 import javax.persistence.*;
-import pkg487.loan.core.User;
-
 
 /**
  *
@@ -212,6 +210,25 @@ public class LoanManager {
       result.toArray(loans);
       return loans;
 
+  }
+  
+  public Loan[] loansByMemberId(int userId){
+      EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+      List<Loan> result = null;
+      
+      try{
+          Query query = em.createNamedQuery("Loan.findByUserId");
+          query.setParameter("userId", userId);
+          result = query.getResultList();      
+      }catch(Exception e){
+          e.printStackTrace();
+      }finally{
+	  em.close();
+      }
+      
+      Loan[] loans = new Loan[result.size()];
+      result.toArray(loans);
+      return loans;
   }
   
 }

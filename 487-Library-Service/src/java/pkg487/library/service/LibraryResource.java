@@ -5,7 +5,6 @@
  */
 package pkg487.library.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;

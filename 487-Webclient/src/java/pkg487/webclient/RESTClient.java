@@ -4,15 +4,10 @@
  * and open the template in the editor.
  */
 package pkg487.webclient;
-import com.sun.xml.rpc.processor.modeler.j2ee.xml.resourceEnvRefType;
 import java.util.List;
-import javax.ws.rs.ClientErrorException;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
