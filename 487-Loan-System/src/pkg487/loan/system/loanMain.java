@@ -6,6 +6,7 @@
 package pkg487.loan.system;
 import java.util.List;
 import pkg487.loan.core.Loan;
+import pkg487.loan.core.User;
 import pkg487.loan.system.LoanManager;
 
 /**
@@ -18,7 +19,7 @@ public class loanMain {
      */
     public static void main(String[] args) throws LoanUnvailableException {
         // TODO code application logic here
-	
+	/*
 	LoanManager lm = new LoanManager();
 	List<Loan> loans = lm.read(null);
 	/*for(Loan l : loans){
@@ -31,13 +32,20 @@ public class loanMain {
 	
 	
 	//lm.returnBook(lm.getActiveLoan(3, 1).getId());
-	*/
+	
 	Loan[] activeLoans = lm.getAllActiveLoans(1);
 	System.out.println("=====================================");
 	loans = lm.read(null);
 	for(Loan l : activeLoans){
 	System.out.println(l);
 	}
+	*/
+	
+	UserManager um = new UserManager();
+	List<User> users = um.read(null);
+	
+	System.out.println(users);
+	
 	
     }
     

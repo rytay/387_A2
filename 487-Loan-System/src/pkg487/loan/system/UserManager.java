@@ -20,7 +20,7 @@ import pkg487.loan.core.*;
  */
 public class UserManager {
     
-    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("487-User-CorePU");
+    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("487-Loan-CorePU");
 
     public List<User> read(Integer id){
 	
