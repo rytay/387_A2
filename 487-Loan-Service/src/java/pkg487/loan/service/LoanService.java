@@ -7,10 +7,7 @@ package pkg487.loan.service;
 
 import java.util.List;
 import javax.jws.WebService;
-import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import javax.jws.soap.SOAPBinding;
-import javax.jws.soap.SOAPBinding.Style;
 import pkg487.loan.core.*;
 import pkg487.loan.system.*;
 
@@ -18,16 +15,14 @@ import pkg487.loan.system.*;
  *
  * @author Xavier Vani-Charron
  */
-@WebService(serviceName = "LoanService")
-@SOAPBinding(style = Style.RPC)
-public class LoanService {
+@WebService(portName="LoanServicePort", serviceName="LoanService", endpointInterface = "pkg487.loan.system.LoanServiceInterface")
+public class LoanService implements LoanServiceInterface {
     
     /**
      * Loan Operations
      * @return 
      */
     
-    @WebMethod(operationName = "listLoans")
     public Loan[] listLoans(){
         LoanManager manager = new LoanManager();
         List<Loan> loanList = manager.read(null);
@@ -36,26 +31,22 @@ public class LoanService {
         return loanArray;
     }
     
-    @WebMethod(operationName = "listLoansByBookId")
     public Loan[] listLoansByBook(@WebParam(name = "bookId") int bookId){
         LoanManager manager = new LoanManager();
         return manager.loansByBookId(bookId);
     }
     
-    @WebMethod(operationName = "listLoansByMemberId")
     public Loan[] listLoansByMemberId(@WebParam(name = "memberId") int memberId){
         LoanManager manager = new LoanManager();
         return manager.loansByMemberId(memberId);
     }
     
-    @WebMethod(operationName = "getLoan")
     public Loan getLoan(@WebParam(name = "loanId") int loanId){
         LoanManager manager = new LoanManager();
         List<Loan> loanList = manager.read(loanId);
         return loanList.get(0);
     }
     
-    @WebMethod(operationName = "borrowBook")
     public void borrowBook(@WebParam(name = "userId") int userId, @WebParam(name = "bookId") int bookId) throws LoanUnvailableException{
         Loan newLoan = new Loan();
         newLoan.setBookId(bookId);
@@ -64,7 +55,6 @@ public class LoanService {
         manager.create(newLoan);
     }
     
-    @WebMethod(operationName = "updateLoan")
     public void updateLoan(@WebParam(name = "loanId") int loanId) throws LoanUnvailableException{
         Loan loanToUpdate = new Loan();
         loanToUpdate.setId(loanId);
@@ -72,13 +62,11 @@ public class LoanService {
         manager.update(loanToUpdate);
     }
     
-    @WebMethod(operationName = "returnItem")
     public void returnItem(@WebParam(name = "loandId") int loanId) throws LoanUnvailableException{
         LoanManager manager = new LoanManager();
         manager.returnBook(loanId);
     }
     
-    @WebMethod(operationName = "deletLoan")
     public void deleteLoan(@WebParam(name = "loanId") int loanId) throws LoanUnvailableException{
         LoanManager manager = new LoanManager();
         manager.delete(loanId);
@@ -90,7 +78,6 @@ public class LoanService {
      * 
      */
     
-    @WebMethod(operationName = "listMembers")
     public User[] listMembers(){
         UserManager manager = new UserManager();
         List<User> userList = manager.read(null);
@@ -99,7 +86,6 @@ public class LoanService {
         return userArray;
     }
     
-    @WebMethod(operationName = "getMember")
     public User getMember(@WebParam(name = "userId") int userId){
         UserManager manager = new UserManager();
         User result = new User();
@@ -112,7 +98,6 @@ public class LoanService {
         return result;
     }
     
-    @WebMethod(operationName = "addMember")
     public void addMember(@WebParam(name = "login") String login, @WebParam(name="pass") String pass){
         User newUser = new User();
         newUser.setLogin(login);
@@ -122,7 +107,6 @@ public class LoanService {
         manager.create(newUser);
     }
     
-    @WebMethod(operationName = "updateMember")
     public void updateMember(@WebParam(name = "userId") int userId, @WebParam(name = "login") String login, @WebParam(name="pass") String pass, @WebParam(name = "authLevel") int authLevel) throws UserUnvailableException{
         
         User userToUpdate = new User();
@@ -140,9 +124,20 @@ public class LoanService {
         manager.update(userToUpdate);
     }
     
-    @WebMethod(operationName = "deleteMember")
     public void deleteMember(@WebParam(name = "userId") int userId) throws UserUnvailableException{
         UserManager manager = new UserManager();
         manager.delete(userId);
+    }
+    
+    public User authUser(@WebParam(name="login") String login, @WebParam(name="pass") String pass) throws UserLoginException{
+        
+        UserManager manager = new UserManager();
+        User user = manager.authenticate(login, pass);
+        
+        if(user == null){
+            throw new UserLoginException("Login invalid.");
+        }
+        
+        return user;
     }
 }

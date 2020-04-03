@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.4.3 (RELEASE-2.4.3-ad3323c; 2019-01-21T17:46:06+0000) JAXWS-RI/2.3.2 JAXWS-API/2.3.2 JAXB-RI/2.3.2 JAXB-API/2.3.2 git-revision#unknown. --><xs:schema xmlns:tns="http://service.loan.pkg487/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://service.loan.pkg487/">
+
+<xs:element name="LoanUnvailableException" type="tns:LoanUnvailableException"/>
+
+<xs:element name="UserUnvailableException" type="tns:UserUnvailableException"/>
+
+<xs:element name="loan" type="tns:loan"/>
+
+<xs:element name="user" type="tns:user"/>
+
+<xs:complexType name="user">
+<xs:sequence>
+<xs:element name="authLevel" type="xs:int" minOccurs="0"/>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="login" type="xs:string" minOccurs="0"/>
+<xs:element name="pass" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="LoanUnvailableException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UserUnvailableException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loan">
+<xs:sequence>
+<xs:element name="bookId" type="xs:int" minOccurs="0"/>
+<xs:element name="dateBorrowed" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="dateReturned" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="userId" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loanArray" final="#all">
+<xs:sequence>
+<xs:element name="item" type="tns:loan" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="userArray" final="#all">
+<xs:sequence>
+<xs:element name="item" type="tns:user" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
