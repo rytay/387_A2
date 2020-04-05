@@ -91,9 +91,9 @@ if(session == null){
                     </thead>
                     <tbody>                           
                         <%
-                            RESTClient client = new RESTClient();
-                            List<Book> books = client.listBooks("text");
-                            pageContext.setAttribute("books", books);
+//                            RESTClient client = new RESTClient();
+//                            List<Book> books = client.listBooks("text");
+//                            pageContext.setAttribute("books", books);
                         %>
                         
                         <c:forEach items="${books}" var="book">

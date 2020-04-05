@@ -31,7 +31,8 @@ if(session == null){
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <!-- Bulma Version 0.8.x-->
     <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/admin.css">
+    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/admin.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -40,7 +41,7 @@ if(session == null){
     <nav class="navbar is-white">
         <div class="container">
             <div class="navbar-brand">
-                <a class="navbar-item brand-text" href="/487-Webclient/admin/home.jsp">
+                <a class="navbar-item brand-text" href="<%= request.getContextPath() %>/admin/home.jsp">
           Library Management System
         </a>
                 <div class="navbar-burger burger" data-target="navMenu">
@@ -51,10 +52,10 @@ if(session == null){
             </div>
             <div id="navMenu" class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item" href="/487-Webclient/admin/home.jsp">Home</a>
-                    <a class="navbar-item" href="/487-Webclient/admin/managebooks/managebooks.jsp">Manage Books</a>
-                    <a class="navbar-item" href="/487-Webclient/admin/manageloans/manageloans.jsp">Manage Loans</a>
-                    <a class="navbar-item" href="/487-Webclient/admin/manageusers/manageusers.jsp">Manage Users</a>
+                    <a class="navbar-item" href="<%= request.getContextPath() %>/admin/home.jsp">Home</a>
+                    <a class="navbar-item" href="<%= request.getContextPath() %>/admin/managebooks/managebooks.jsp">Manage Books</a>
+                    <a class="navbar-item" href="<%= request.getContextPath() %>/admin/manageloans/manageloans.jsp">Manage Loans</a>
+                    <a class="navbar-item" href="<%= request.getContextPath() %>/admin/manageusers/manageusers.jsp">Manage Users</a>
                 </div>
                 <div class="navbar-end">
                     <div class="navbar-item">
@@ -86,7 +87,7 @@ if(session == null){
                             <th>Book ID Loaned</th>
                             <th>Date Borrowed</th>
                             <th>Date Returned</th>
-                            <th>Edit Loan</th>
+                            <th>Save Loan</th>
                             <th>Delete Loan</th>
                         </tr>
                     </thead>
@@ -97,21 +98,24 @@ if(session == null){
                             pageContext.setAttribute("loans", loans);
                         %>
                         
+                    
                         <c:forEach items="${loans}" var="loan">
+                            <form action="<%= request.getContextPath() %>/ManageLoans" method="POST">
                             <tr>
                                 <td>${loan.getId()}</td>
-                                <td>${loan.getUserId()}</td>
-                                <td>${loan.getBookId()}</td>
-                                <td>${loan.getDateBorrowed()}</td>
-                                <td>${loan.getDateReturned()}</td>
-                                <td>Test</td>
-                                <td>Test</td>
+                                <td><input class="input" type="text" name="userId" value="${loan.getUserId()}"/></td>
+                                <td><input class="input" type="text" name="bookId" value="${loan.getBookId()}"/></td>
+                                <td><input class="input" type="text" name="dateBorrowed" value="${loan.getDateBorrowed()}"/></td>
+                                <td><input class="input" type="text" name="dateReturned" value="${loan.getDateReturned()}"/></td>
+                                <td><input class="button" type="submit" name="save" value="Save"/></td>
+                                <td><input class="button" type="submit" name="delete" value="Delete"/></td>
                             </tr>
+                            </form>
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
         </section>
    </body>
-    <script async type="text/javascript" src="../../js/bulma.js"></script>
+    <script async type="text/javascript" src="<%= request.getContextPath() %>/js/bulma.js"></script>
 </html>

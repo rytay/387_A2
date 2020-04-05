@@ -8,11 +8,11 @@
 <%
 //Check if User is Admin
 if(session == null){
-    response.sendRedirect("..");
+    response.sendRedirect(request.getContextPath());
 }else if(null == session.getAttribute("authLevel")){
-    response.sendRedirect("..");
+    response.sendRedirect(request.getContextPath());
 }else if(!session.getAttribute("authLevel").equals(0)){
-    response.sendRedirect("..");
+    response.sendRedirect(request.getContextPath());
 }
 %>
 <!DOCTYPE html>
@@ -26,7 +26,7 @@ if(session == null){
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <!-- Bulma Version 0.8.x-->
     <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
-    <link rel="stylesheet" type="text/css" href="../css/admin.css">
+    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/admin.css">
 </head>
 
 <body>
@@ -46,14 +46,14 @@ if(session == null){
             </div>
             <div id="navMenu" class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item" href="/487-Webclient/admin/home.jsp">Home</a>
-                    <a class="navbar-item" href="/487-Webclient/admin/managebooks/managebooks.jsp">Manage Books</a>
-                    <a class="navbar-item" href="/487-Webclient/admin/manageloans/manageloans.jsp">Manage Loans</a>
-                    <a class="navbar-item" href="/487-Webclient/admin/manageusers/manageusers.jsp">Manage Users</a>
+                    <a class="navbar-item" href="<%= request.getContextPath() %>/admin/home.jsp">Home</a>
+                    <a class="navbar-item" href="<%= request.getContextPath() %>/admin/managebooks/managebooks.jsp">Manage Books</a>
+                    <a class="navbar-item" href="<%= request.getContextPath() %>/admin/manageloans/manageloans.jsp">Manage Loans</a>
+                    <a class="navbar-item" href="<%= request.getContextPath() %>/admin/manageusers/manageusers.jsp">Manage Users</a>
                 </div>
                 <div class="navbar-end">
                     <div class="navbar-item">
-                        <form action="/487-Webclient/LogOutServlet" method="POST">
+                        <form action="<%= request.getContextPath() %>/LogOutServlet" method="POST">
                             <input class="button" type="submit" name="logout" value="logout" />
                         </form>
                     </div>
@@ -65,7 +65,7 @@ if(session == null){
     <div class="container">
         <h1>Welcome <% out.println(session.getAttribute("username")); %> </h1>
     </div>                  
-    <script async type="text/javascript" src="../js/bulma.js"></script>
+    <script async type="text/javascript" src="<%= request.getContextPath() %>/js/bulma.js"></script>
 </body>
 
 </html>
