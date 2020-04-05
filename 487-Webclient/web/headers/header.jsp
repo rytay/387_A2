@@ -1,6 +1,6 @@
 <%-- 
-    Document   : home
-    Created on : Apr 3, 2020, 1:42:49 PM
+    Document   : header.jsp
+    Created on : Apr 4, 2020, 3:19:50 PM
     Author     : Xavier Vani-Charron
 --%>
 
@@ -9,9 +9,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>User Homepage</title>
+        <title>JSP Page</title>
     </head>
     <body>
-        
+        <h1>Hello World!</h1>
     </body>
 </html>

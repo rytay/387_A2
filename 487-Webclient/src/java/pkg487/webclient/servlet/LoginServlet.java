@@ -7,6 +7,7 @@ package pkg487.webclient.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,51 +37,74 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        SOAPClient client = new SOAPClient();
-        User user = null;
         HttpSession session = request.getSession(false);
+        String username = "";
+        String password = "";
+        SOAPClient client = null;
+        User user = null;
+        RequestDispatcher rd;
         
-        try{
-            user = client.authUser(username, password);
-        }catch(UserLoginException e){
+        if(session == null){
             
-        }
-        
-        if(user != null){
-            if(session != null){
-                //Already logged in redirect to appropriate spot
-                switch(user.getAuthLevel()){
-                    case 0:
-                        response.sendRedirect("/487-Webclient/admin/home.jsp");
-                        break;
-                    case 1:
-                        response.sendRedirect("/487-Webclient/user/home.jsp");
-                        break;
-                    default:
-                        break;
+            username = request.getParameter("username");
+            password = request.getParameter("password");
+            client = new SOAPClient();
+            
+            try{
+                user = client.authUser(username, password);
+            }catch(UserLoginException e){
+                
+            }
+            
+            if(user != null){
+                
+                session = request.getSession(true);
+                session.setAttribute("username", user.getLogin());
+                session.setAttribute("password", user.getPass());
+                session.setAttribute("authLevel", user.getAuthLevel());
+                
+                if(user.getAuthLevel() == 0){
+                     response.sendRedirect("/487-Webclient/admin/home.jsp");
+                }else if(user.getAuthLevel() == 1){
+                     response.sendRedirect("/487-Webclient/user/home.jsp");
                 }
             }
-            else{
+            
+        }else if(null == session.getAttribute("authLevel")){
+            
+            session.invalidate();
+            
+            username = request.getParameter("username");
+            password = request.getParameter("password");
+            client = new SOAPClient();
+            
+            try{
+                user = client.authUser(username, password);
+            }catch(UserLoginException e){
+                
+            }
+            
+            if(user != null){
+                
                 session = request.getSession(true);
-                session.setAttribute("username", username);
-                session.setAttribute("password", password);
+                session.setAttribute("username", user.getLogin());
+                session.setAttribute("password", user.getPass());
                 session.setAttribute("authLevel", user.getAuthLevel());
+                
+                if(user.getAuthLevel() == 0){
+                    response.sendRedirect("/487-Webclient/admin/home.jsp");
+                    
+                }else if(user.getAuthLevel() == 1){
+                    response.sendRedirect("/487-Webclient/user/home.jsp");
+                }
+            }
+        }else{
+            if(session.getAttribute("authLevel").toString().equals("0")){
+                response.sendRedirect("/487-Webclient/admin/home.jsp");           
+            }else if(session.getAttribute("authLevel").toString().equals("1")){
+                response.sendRedirect("/487-Webclient/user/home.jsp");
             }
         }
-        
-        switch(user.getAuthLevel()){
-            case 0:
-                response.sendRedirect("/487-Webclient/admin/home.jsp");
-                break;
-            case 1:
-                response.sendRedirect("/487-Webclient/user/home.jsp");
-                break;
-            default:
-                break;
-        }
-        
         
     }
 
