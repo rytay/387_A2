@@ -35,7 +35,7 @@ if(session == null){
     <nav class="navbar is-white">
         <div class="container">
             <div class="navbar-brand">
-                <a class="navbar-item brand-text" href="../index.html">
+                <a class="navbar-item brand-text" href="<%= request.getContextPath() %>/admin/home.jsp">
           Library Management System
         </a>
                 <div class="navbar-burger burger" data-target="navMenu">

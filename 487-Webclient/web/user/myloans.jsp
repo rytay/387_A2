@@ -1,11 +1,14 @@
 <%-- 
-    Document   : library
-    Created on : Apr 5, 2020, 1:49:11 PM
-    Author     : Xavier Vani-Charron
+    Document   : myloans
+    Created on : Apr 5, 2020, 3:53:10 PM
+    Author     : xavie
 --%>
 
-<%@page import="pkg487.library.core.Book"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
+<%@page import="pkg487.loan.core.Loan"%>
+<%@page import="pkg487.webclient.SOAPClient"%>
+<%@page import="pkg487.library.core.Book"%>
 <%@page import="pkg487.webclient.RESTClient"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -43,7 +46,7 @@
                 <div class="navbar-start">
                     <a class="navbar-item" href="<%= request.getContextPath() %>/user/home.jsp">Home</a>
                     <a class="navbar-item" href="<%= request.getContextPath() %>/user/library.jsp">Library</a>
-                    <a class="navbar-item" href="<%= request.getContextPath() %>/user/myloans.jsp">My Loans</a>
+                    <a class="navbar-item" href="<%= request.getContextPath() %>/user/library.jsp">My Loans</a>
                     <a class="navbar-item" href="<%= request.getContextPath() %>/user/account.jsp">My Account</a>
                 </div>
                 <div class="navbar-end">
@@ -60,7 +63,7 @@
     <section class="hero">
         <div clas="hero-body">
             <div class="container">
-                <h1 class="title">Borrow a Book</h1>
+                <h1 class="title">My Loans</h1>
             </div>
         </div>
     </section>
@@ -69,31 +72,28 @@
             <table class="table">
                     <thead>
                         <tr>
+                            <th>Loan Id</th>
                             <th>Book Id</th>
-                            <th>Book Title</th>
-                            <th>Book Description</th>
-                            <th>Book ISBN</th>
-                            <th>Book Author</th>
-                            <th>Book Publisher</th>
-                            <th>Borrow Book</th>
+                            <th>Date Borrowed</th>
+                            <th>Date Returned </th>
+                            <th>Return Book</th>
                         </tr>
                     </thead>
                     <tbody>
                         <%
-                            RESTClient r_client = new RESTClient();
-                            List<Book> books = r_client.listBooks("json");
-                            pageContext.setAttribute("books", books);
+                            Integer userId = (Integer) session.getAttribute("userId");
+                            SOAPClient client = new SOAPClient();
+                            Loan[] loans = client.listLoansByMemberId(userId);
+                            pageContext.setAttribute("loans", loans);
                         %>
-                        <c:forEach items="${books}" var="book">
+                        <c:forEach items="${loans}" var="loan">
                             <tr>
-                                <form action="<%= request.getContextPath()%>/BorrowBook" method="POST">
-                                    <td><input class="input" type="text" name="id" value="${book.getId()}" readonly/></td>
-                                    <td>${book.getTitle()}</td>
-                                    <td>${book.getBookDesc()}</td>
-                                    <td>${book.getIsbn()}</td>
-                                    <td>${book.getAuthor()}</td>
-                                    <td>${book.getPublisher()}</td>
-                                    <td><input class="button" type="submit" name="borrow" value="Borrow"/></td>
+                                <form action="<%= request.getContextPath()%>/ReturnBook" method="POST">
+                                    <td><input class="input" type="text" name="id" value="${loan.getId()}" readonly/></td>
+                                    <td>${loan.getBookId()}</td>
+                                    <td>${loan.getDateBorrowed()}</td>
+                                    <td>${loan.getDateReturned()} </td>
+                                    <td><input class="button" type="submit" name="return" value="Return"/></td>
                                 </form>
                             </tr>
                         </c:forEach>

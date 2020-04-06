@@ -49,6 +49,10 @@ public class SOAPClient {
         return loanService.listLoansByBook(bookId);
     }
     
+    public Loan[] listLoansByMemberId(int memberId){
+        return loanService.listLoansByMemberId(memberId);
+    }
+    
     public Loan getLoan(int loanId){
         return loanService.getLoan(loanId);
     }

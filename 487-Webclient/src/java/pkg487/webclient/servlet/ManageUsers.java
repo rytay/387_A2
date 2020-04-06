@@ -43,7 +43,20 @@ public class ManageUsers extends HttpServlet {
                 if(null != request.getParameter("save")){
                     //TODO Update
                 }else if(null != request.getParameter("delete")){
-                    
+                    if(null != request.getParameter("id")){
+                        int userId = -1;
+                        try{
+                            userId = Integer.parseInt(request.getParameter("id"));
+                        }catch(Exception e){
+                            
+                        }
+                        try{
+                            client.deleteMember(userId);
+                        }catch(Exception e){
+                            
+                        }
+                        response.sendRedirect(request.getContextPath()+"/admin/manageusers/manageusers.jsp");
+                    }
                 }else if(null != request.getParameter("create")){
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");                   

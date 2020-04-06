@@ -6,26 +6,22 @@
 package pkg487.webclient.servlet;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import pkg487.loan.core.Loan;
-import pkg487.loan.system.LoanUnvailableException;
-import pkg487.webclient.SOAPClient;
+import pkg487.library.core.Book;
+import pkg487.webclient.RESTClient;
 
 /**
  *
  * @author Xavier Vani-Charron
  */
-@WebServlet(name = "ManageLoans", urlPatterns = {"/ManageLoans"})
-public class ManageLoans extends HttpServlet {
+@WebServlet(name = "ManageBooks", urlPatterns = {"/ManageBooks"})
+public class ManageBooks extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,43 +35,25 @@ public class ManageLoans extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        
-        Loan loan = null;
-        SOAPClient client = new SOAPClient();
-        Map values = null;
-        int loanId = -1;
+        RESTClient client = new RESTClient();
         
         if(null != session.getAttribute("authLevel")){
-            if(session.getAttribute("authLevel").equals(0)){
+            if(null != request.getParameter("save")){
+                //TODO Update
+            }else if(null != request.getParameter("delete")){
+                client.deleteBook(request.getParameter("id"));
+                response.sendRedirect(request.getContextPath()+"/admin/managebooks/managebooks.jsp");
+            }else if(null != request.getParameter("create")){
                 
-                if(null != request.getParameter("save")){
-                    //TODO Update Code
-                }else if(null != request.getParameter("delete")){
-                    //Delete
-                    try{
-                        loanId = Integer.parseInt(request.getParameter("id"));
-                    }catch(NumberFormatException e){
-                    }
-                    
-                    if(loanId != -1){
-                        try{
-                            client.deleteLoan(loanId);
-                        }catch(LoanUnvailableException e){
-
-                        }
-                        
-                        response.sendRedirect(request.getContextPath()+ "/admin/manageloans/manageloans.jsp");
-                    }
-                }
-                    
-//                values = request.getParameterMap();
-//                
-//                for(Object key : values.entrySet()){
-//                    String keyString = (String) key;
-//                    String[] value = (String[]) values.get(keyString);
-//                    System.out.println(keyString + Arrays.toString(value));
-//                }
-               
+                Book book = new Book();
+                book.setAuthor(request.getParameter("author"));
+                book.setBookDesc(request.getParameter("desc"));
+                book.setIsbn(request.getParameter("isbn"));
+                book.setPublisher(request.getParameter("pub"));
+                book.setTitle(request.getParameter("title"));
+                
+                client.createBook(book, "application/json");
+                response.sendRedirect(request.getContextPath()+"/admin/managebooks/managebooks.jsp");
             }
         }
     }

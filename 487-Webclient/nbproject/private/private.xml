@@ -3,8 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Concordia/SOEN487/487_A2/487-Webclient/web/user/home.jsp</file>
-            <file>file:/D:/Concordia/SOEN487/487_A2/487-Webclient/web/user/account.jsp</file>
+            <file>file:/D:/Concordia/SOEN487/487_A2/487-Webclient/web/user/myloans.jsp</file>
+            <file>file:/D:/Concordia/SOEN487/487_A2/487-Webclient/src/java/pkg487/webclient/servlet/ReturnBook.java</file>
+            <file>file:/D:/Concordia/SOEN487/487_A2/487-Webclient/src/java/pkg487/webclient/servlet/BorrowBook.java</file>
             <file>file:/D:/Concordia/SOEN487/487_A2/487-Webclient/web/user/library.jsp</file>
         </group>
     </open-files>

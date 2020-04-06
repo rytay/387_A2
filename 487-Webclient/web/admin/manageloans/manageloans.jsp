@@ -1,7 +1,7 @@
 <%-- 
     Document   : manageloans
     Created on : Apr 4, 2020, 3:04:16 PM
-    Author     : xavie
+    Author     : Xavier Vani-Charron
 --%>
 
 <%@page import="pkg487.loan.core.Loan"%>
@@ -11,14 +11,14 @@
 <%@page import="pkg487.loan.core.User" %>
 
 <%
-//Check if User is Admin
-if(session == null){
-    response.sendRedirect("..");
-}else if(null == session.getAttribute("authLevel")){
-    response.sendRedirect("..");
-}else if(!session.getAttribute("authLevel").equals(0)){
-    response.sendRedirect("..");
-}
+    //Check if User is Admin
+    if(session == null){
+        response.sendRedirect(request.getContextPath());
+    }else if(null == session.getAttribute("authLevel")){
+        response.sendRedirect(request.getContextPath());
+    }else if(!session.getAttribute("authLevel").equals(0)){
+        response.sendRedirect(request.getContextPath());
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -102,7 +102,7 @@ if(session == null){
                         <c:forEach items="${loans}" var="loan">
                             <form action="<%= request.getContextPath() %>/ManageLoans" method="POST">
                             <tr>
-                                <td>${loan.getId()}</td>
+                                <td><input class="input" type="text" name="id" value="${loan.getId()}" readonly/></td>
                                 <td><input class="input" type="text" name="userId" value="${loan.getUserId()}"/></td>
                                 <td><input class="input" type="text" name="bookId" value="${loan.getBookId()}"/></td>
                                 <td><input class="input" type="text" name="dateBorrowed" value="${loan.getDateBorrowed()}"/></td>

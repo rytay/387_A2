@@ -39,9 +39,7 @@ if(session == null){
     <nav class="navbar is-white">
         <div class="container">
             <div class="navbar-brand">
-                <a class="navbar-item brand-text" href="<%= request.getContextPath() %>/admin/home.jsp">
-          Library Management System
-        </a>
+                <a class="navbar-item brand-text" href="<%= request.getContextPath() %>/admin/home.jsp">Library Management System</a>
                 <div class="navbar-burger burger" data-target="navMenu">
                     <span></span>
                     <span></span>
@@ -98,7 +96,7 @@ if(session == null){
                         <c:forEach items="${users}" var="user">
                             <tr>
                                 <form action="<%= request.getContextPath()%>/ManageUsers" method="POST">
-                                    <td>${user.getId()}</td>
+                                    <td><input class="input" type="text" name="id" value="${user.getId()}" readonly/></td>
                                     <td><input class="input" type="text" name="username" value="${user.getLogin()}"/></td>
                                     <td><input class="input" type="text" name="password" value="${user.getPass()}"/></td>
                                     <td><input class="input" type="text" name="authLevel" value="${user.getAuthLevel()}"/></td>

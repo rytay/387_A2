@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%
 //Check if User is Admin
 if(session == null){
@@ -48,6 +50,7 @@ if(session == null){
                 <div class="navbar-start">
                     <a class="navbar-item" href="<%= request.getContextPath() %>/user/home.jsp">Home</a>
                     <a class="navbar-item" href="<%= request.getContextPath() %>/user/library.jsp">Library</a>
+                    <a class="navbar-item" href="<%= request.getContextPath() %>/user/myloans.jsp">My Loans</a>
                     <a class="navbar-item" href="<%= request.getContextPath() %>/user/account.jsp">My Account</a>
                 </div>
                 <div class="navbar-end">

@@ -42,7 +42,6 @@ public class LoginServlet extends HttpServlet {
         String password = "";
         SOAPClient client = null;
         User user = null;
-        RequestDispatcher rd;
         
         if(session == null){
             
@@ -59,6 +58,7 @@ public class LoginServlet extends HttpServlet {
             if(user != null){
                 
                 session = request.getSession(true);
+                session.setAttribute("userId", user.getId());
                 session.setAttribute("username", user.getLogin());
                 session.setAttribute("password", user.getPass());
                 session.setAttribute("authLevel", user.getAuthLevel());
@@ -87,6 +87,7 @@ public class LoginServlet extends HttpServlet {
             if(user != null){
                 
                 session = request.getSession(true);
+                session.setAttribute("userId", user.getId());
                 session.setAttribute("username", user.getLogin());
                 session.setAttribute("password", user.getPass());
                 session.setAttribute("authLevel", user.getAuthLevel());
