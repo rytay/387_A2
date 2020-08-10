@@ -126,6 +126,7 @@ public class LoanManager {
 	
     }
   
+//Logic for returning a book
   public void returnBook(Integer loanId) throws LoanUnvailableException{
         EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction et = null;
@@ -158,7 +159,7 @@ public class LoanManager {
         }
 	
     }
-  
+  //Get the active loan given bookId and userId
   public Loan getActiveLoan(Integer bookId, Integer userId) throws LoanUnvailableException{
       EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
       Query query = em.createNamedQuery("Loan.findActiveForUser").setParameter("bookId", bookId).setParameter("userId", userId);
@@ -171,7 +172,7 @@ public class LoanManager {
   }
   
  
-  
+  //Returns all active loans for a given user
   public Loan[] getAllActiveLoans(Integer userId) throws LoanUnvailableException{
       EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
       Query query = null;
@@ -187,7 +188,7 @@ public class LoanManager {
       return active;
     }
   
-  
+  //Return loans by book ids
   public Loan[] loansByBookId(int bookId){
       
       if(bookId == -1){
