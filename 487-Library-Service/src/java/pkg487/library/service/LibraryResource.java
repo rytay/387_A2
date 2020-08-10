@@ -73,9 +73,6 @@ public class LibraryResource {
 
 	    case "text":
 		return Response.ok(queryResult.toString(), MediaType.TEXT_PLAIN).build();
-	    case "html":
-		//Need to implement html conversion
-		return Response.ok("HTML NOT IMPLEMENTED",MediaType.TEXT_HTML).build();
 	    default:
 		return Response.status(Response.Status.BAD_REQUEST).entity("No such type : "+type).type(MediaType.TEXT_PLAIN).build();
 	}
