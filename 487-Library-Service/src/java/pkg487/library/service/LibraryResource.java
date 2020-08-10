@@ -60,6 +60,7 @@ public class LibraryResource {
      }
     
   */
+	//Converts query results into JSON,XML or plain text
     //Always returns a list. Empty list if no results. list with 1 element for single book find. List with all books for listing all books
     private Response toRequestedType(List<Book> queryResult, String type) {
 
@@ -128,7 +129,7 @@ public class LibraryResource {
     
        /**
      * Creates book in db based on HTML form
-     * @param b
+     * @param title,description,author,isbn,publisher
      * @return 
      */
     @POST
@@ -176,7 +177,7 @@ public class LibraryResource {
     }
   
     /**
-     * edits a book using serialized version of 
+     * edits a book using serialized version of book
      * @param b
      * @return 
      */
@@ -194,7 +195,11 @@ public class LibraryResource {
 	
 	return Response.ok(200).entity("Successfully edited book : \n"+editedBook).build();
     }
-    
+     /**
+     * edits a book using a form
+     * @param b
+     * @return 
+     */
     @PUT
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/edit")
