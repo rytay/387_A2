@@ -170,7 +170,7 @@ public class LoanManager {
   }
   
  
-  //may want to return an empty list instead of an exception, but can be done on client
+  
   public Loan[] getAllActiveLoans(Integer userId) throws LoanUnvailableException{
       EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
       Query query = null;
