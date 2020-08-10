@@ -13,6 +13,7 @@ import javax.persistence.*;
 /**
  *
  * @author ryan
+ Provides CRUD Operations for Loans
  */
 
 public class LoanManager {
