@@ -93,10 +93,7 @@ public class LibraryResource {
 
 	LibraryManager manager = new LibraryManager();
 	List<Book> queryResult = manager.read(id);
-	/*determine whether to return a single book or a list. No result for query will return an empty list
-	boolean singleResult = id != null && !books.isEmpty();
-	return toRequestedType(books, type, singleResult);
-	*/
+	
 	return toRequestedType(queryResult, type);
     }
     
