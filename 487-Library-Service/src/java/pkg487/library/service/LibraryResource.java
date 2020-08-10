@@ -59,41 +59,7 @@ public class LibraryResource {
 
      }
     
-    
-    
-    not sure if should always return a list and then handle on client if there are none/one result. 
-    or determine whether to send a list or single entity in this class.
-    private Response toRequestedType(List<Book> books, String type, boolean singleResult) {
-
-	switch(type){
-	    case "json":
-		if(singleResult)
-		    return Response.ok(books.get(0), MediaType.APPLICATION_JSON).build();
-		else
-		    return Response.ok(books, MediaType.APPLICATION_JSON).build();
-	    case "xml":
-		if(singleResult){
-		    return Response.ok(books.get(0), MediaType.APPLICATION_XML).build();
-		}
-		else{
-		    GenericEntity<List<Book>> list = new GenericEntity<List<Book>>(books) {};
-		    return Response.ok(list, MediaType.APPLICATION_XML).build();
-		}
-
-	    case "text":
-		if(singleResult)
-		    return Response.ok(books.get(0).toString(), MediaType.TEXT_PLAIN).build();
-		else
-		    return Response.ok(books.toString(), MediaType.TEXT_PLAIN).build();
-	    case "html":
-		//Need to implement html conversion
-		return Response.ok("HTML NOT IMPLEMENTED",MediaType.TEXT_HTML).build();
-	    default:
-		return Response.status(Response.Status.BAD_REQUEST).entity("No such type : "+type).type(MediaType.TEXT_PLAIN).build();
-	}
-
-    }
-    */
+  */
     //Always returns a list. Empty list if no results. list with 1 element for single book find. List with all books for listing all books
     private Response toRequestedType(List<Book> queryResult, String type) {
 
