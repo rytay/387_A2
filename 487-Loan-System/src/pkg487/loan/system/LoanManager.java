@@ -35,7 +35,7 @@ public class LoanManager {
 	
 	return result;
     }
-    //Need to check if book exists from client request to Library before doing this method, also user not implemented yet
+    //Need to check if book exists from client request to Library before doing this method
     public void create(Loan newLoan) throws LoanUnvailableException {
 	Integer bookId = newLoan.getBookId();
 	EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
